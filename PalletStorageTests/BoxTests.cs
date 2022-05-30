@@ -6,7 +6,13 @@ namespace PalletStorageTests;
 public class BoxTests
 {
     [Fact]
-    public void Test1()
+    public void BoxVolime()
+    {
+
+    }
+
+    [Fact]
+    public void BoxExpirationDate()
     {
 
     }
