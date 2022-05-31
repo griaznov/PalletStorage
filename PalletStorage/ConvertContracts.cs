@@ -7,7 +7,6 @@ public class ContractStorage
     public string? Name { get; set; }
     public IDictionary<string, ContractBox>? Boxes { get; set; }
     public IDictionary<string, ContractPallet>? Pallets { get; set; }
-
 }
 
 public class ContractBox
