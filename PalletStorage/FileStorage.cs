@@ -67,7 +67,6 @@ internal class FileStorage : IFileStorage
     //    return output;
     //}
 
-
     public Storage? ReadStorageFromFile()
     {
         Storage? storage;
@@ -102,8 +101,6 @@ internal class FileStorage : IFileStorage
         return storage;
     }
 
-
-
     public Pallet? ReadPallletFromFile(string fileName)
     {
         Pallet? storage;
@@ -120,5 +117,4 @@ internal class FileStorage : IFileStorage
 
         return storage;
     }
-
 }

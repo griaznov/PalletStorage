@@ -1,19 +1,34 @@
-﻿using Ex.PalletStorage;
+﻿using static System.Console;
+using Ex.PalletStorage;
 
-Storage storage = TestGenerator.GenerateStorage();
+// Generate test values in Storage
+Storage storage = TestGenerator.GenerateTestStorage();
+storage.Print();
 
+// Save Storage in file
 FileStorage storageToFile = new();
 
+// Read from file in new object
 storageToFile.WriteStorageToFile(storage);
+Storage? storageConverted = storageToFile.ReadStorageFromFile();
 
-Storage? storage1 = storageToFile.ReadStorageFromFile();
+if (storageConverted is not null)
+{
+    WriteLine("");
+    WriteLine($"Successful conversion from json to Storage");
+}
 
+// Read from file in new Contract object for cinversion in Storage
+ContractStorage? storageConvertedToContract = storageToFile.ReadContractStorageFromFile();
+
+if (storageConvertedToContract is not null)
+{
+    WriteLine("");
+    WriteLine($"Successful conversion from json to ContractStorage");
+}
+
+// Reports
 storage.ReportTopWithMaxExpirationOrderByVolume(3);
-
 storage.ReportPalletsOrderByExpirationAndWeight();
 
-//storageToFile.WriteToFile(Box1, "box1.json");
-//var Box3 = storageToFile.ReadFromFile("box1.json");
 
-//storageToFile.WriteToFile(pallet1, "pallet1.json");
-//var pallet2 = storageToFile.ReadPallletFromFile("pallet1.json");

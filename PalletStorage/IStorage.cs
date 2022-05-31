@@ -8,7 +8,6 @@ namespace Ex.PalletStorage;
 
 interface IUniversalBox
 {
-
     //public IUniversalBox Create();
 }
 

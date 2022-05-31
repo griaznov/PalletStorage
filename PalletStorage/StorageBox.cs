@@ -9,7 +9,7 @@ using static System.Console;
 
 namespace Ex.PalletStorage;
 
-internal class StorageBox : UniversalBox
+public class StorageBox : UniversalBox
 {
     protected string id;
     protected DateTime productionDate; // дата производства
@@ -27,14 +27,29 @@ internal class StorageBox : UniversalBox
         double volume = 0) 
         : base(width, length, height, weight)
     {
+        // Verifying parameters
+        // The box must have an expiration date or production date.
+        if (!ValidateDateParams(productionDate, expirationDate))
+        {
+            StringBuilder stringBuilder = new();
+
+            stringBuilder.AppendFormat($"It is required to specify the expiration date or production date! ");
+            stringBuilder.AppendFormat($"Expiration date: {expirationDate}, Production date: {productionDate}");
+            WriteLine(stringBuilder.ToString());
+
+            throw new ArgumentOutOfRangeException(stringBuilder.ToString());
+        }
+
+        // If only the production date is specified,
+        // the expiration date is calculated from the production date plus 100 days
+        if (expirationDate == default)
+        {
+            expirationDate = productionDate.AddDays(minDaysExpirationDate);
+        }
+
         this.productionDate = productionDate;
         this.expirationDate = expirationDate;
         this.id = id;
-
-        //if (!(volume == 0))
-        //{
-        //    this.volume = volume;
-        //}
 
         if (string.IsNullOrEmpty(this.id))
         {
@@ -74,35 +89,20 @@ internal class StorageBox : UniversalBox
         DateTime prodDate = default,
         DateTime expDate = default)
     {
-        // Verifying parameters
-        // The box must have an expiration date or production date.
-        if (!IsValidBoxParams(width, length, height) 
-            || !IsValidWeight(weight) 
-            || !ValidateDateParams(prodDate, expDate))
+        try
+        {
+            return new StorageBox(width, length, height, weight, prodDate, expDate);
+        }
+        catch
         {
             return null;
         }
-
-        // If only the production date is specified,
-        // the expiration date is calculated from the production date plus 100 days
-        if (expDate == default)
-        {
-            expDate = prodDate.AddDays(minDaysExpirationDate);
-        }
-
-        return new StorageBox(width, length, height, weight, prodDate, expDate);
     }
 
     public static bool ValidateDateParams(DateTime prodDate = default, DateTime expDate = default)
     {
         if ((expDate == default) && (prodDate == default))
         {
-            StringBuilder stringBuilder = new();
-
-            stringBuilder.AppendFormat($"It is required to specify the expiration date or production date! ");
-            stringBuilder.AppendFormat($"Expiration date: {expDate}, Production date: {prodDate}");
-            WriteLine(stringBuilder.ToString());
-
             return false;
         }
         

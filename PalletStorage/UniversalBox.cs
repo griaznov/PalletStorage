@@ -2,7 +2,7 @@
 
 namespace Ex.PalletStorage;
 
-internal class UniversalBox : IUniversalBox
+public class UniversalBox : IUniversalBox
 {
     // fields
     protected double height; // высота
@@ -14,6 +14,13 @@ internal class UniversalBox : IUniversalBox
 
     public UniversalBox(double width, double length, double height, double weight)
     {
+        // Verifying parameters
+        if (!IsValidBoxParams(width, length, height) || !IsValidWeight(weight))
+        {
+            throw new ArgumentOutOfRangeException(
+                "You need to enter the following required parameters: width, length, height, weight!");
+        }
+
         this.height = height;
         this.width = width;
         this.length = length;
@@ -53,21 +60,22 @@ internal class UniversalBox : IUniversalBox
         WriteLine($"Box: {width}/{length}/{height} (w/l/h), weight: {weight}, volume: {volume}");
     }
 
-    public static IUniversalBox? Create(double width, double length, double height, double weight)
+    public static UniversalBox? Create(double width, double length, double height, double weight)
     {
-        if (!IsValidBoxParams(width, length, height) || !IsValidWeight(weight))
+        try
+        {
+            return new UniversalBox(width, length, height, weight);
+        }
+        catch
         {
             return null;
-        }
-
-        return new UniversalBox(width, length, height, weight);
+        } 
     }
 
     public static bool IsValidBoxParams(double width, double length, double height)
     {
         if ((width <= 0) || (length <= 0) || (height <= 0))
         {
-            WriteLine($"You need to enter the following required parameters: width, length, height, weight!");
             return false;
         }
 
@@ -78,7 +86,6 @@ internal class UniversalBox : IUniversalBox
     {
         if (weight <= 0)
         {
-            WriteLine($"You need to enter the weight!");
             return false;
         }
 

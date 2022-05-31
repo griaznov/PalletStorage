@@ -108,6 +108,34 @@ internal class Storage
         return box;
     }
 
+    public void Print()
+    {
+        WriteLine($"Storage: {name}, with free boxes: {boxes.Count}, pallets: {pallets.Count}");
+        WriteLine("");
+
+        WriteLine("Free Boxes:");
+        foreach (var keyValue in boxes)
+        {
+            Write(" ");
+            keyValue.Value.Print();
+        }
+
+        WriteLine("Pallets:");
+        foreach (var keyValue in pallets)
+        {
+            var boxesOnPallet = keyValue.Value;
+
+            Write(" ");
+            boxesOnPallet.Print();
+
+            foreach (var boxKeyValue in pallets)
+            {
+                Write("  ");
+                boxKeyValue.Value.Print();
+            }
+        }
+    }
+
     public StorageBox? FindBox(string boxID)
     {
         if (!boxes.TryGetValue(boxID, out StorageBox? foundВox))
@@ -149,8 +177,6 @@ internal class Storage
         {
             return false;
         }
-
-        WriteLine($"The box (ID: {boxID}) was moved to the pallet (ID: {palletID})");
 
         return true;
     }

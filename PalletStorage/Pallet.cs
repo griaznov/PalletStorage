@@ -7,11 +7,11 @@ using static System.Console;
 
 namespace Ex.PalletStorage;
 
-internal class Pallet : StorageBox
+public class Pallet : StorageBox
 {
     private const double defaultPalletWeight = 30;
 
-    private readonly List<StorageBox>? boxes = new List<StorageBox>();
+    private readonly List<StorageBox>? boxes = new();
 
     public Pallet(double width, double length, double height, double weight,
         DateTime productionDate = default,
@@ -22,8 +22,9 @@ internal class Pallet : StorageBox
 
         : base(width, length, height, weight, productionDate, expirationDate, id, volume)
     {
-        this.boxes = boxes;
+        // default weight value for the pallet
         this.weight = defaultPalletWeight;
+        this.boxes = boxes;
 
         if (boxes == null)
         {
@@ -103,13 +104,20 @@ internal class Pallet : StorageBox
     {
         // default weight value for the pallet
         double weight = defaultPalletWeight;
- 
-        if (!IsValidBoxParams(width, length, height))
+
+        if (prodDate == DateTime.MinValue)
+        {
+            prodDate = DateTime.Today;
+        }
+
+        try
+        {
+            return new Pallet(width, length, height, weight, prodDate);
+        }
+        catch
         {
             return null;
         }
-
-        return new Pallet(width, length, height, weight, prodDate);
     }
 }
 
