@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using static System.IO.Path;
 using static System.Console;
-using static System.Environment;
-using System.IO;
 
 namespace Ex.PalletStorage;
 
