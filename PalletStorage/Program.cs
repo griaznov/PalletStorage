@@ -1,5 +1,6 @@
 ﻿using static System.Console;
-using Ex.PalletStorage;
+using PalletStorage;
+
 
 // Generate test values in Storage
 Storage storage = TestGenerator.GenerateTestStorage();

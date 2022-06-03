@@ -1,5 +1,4 @@
-﻿
-namespace Ex.PalletStorage;
+﻿namespace PalletStorage;
 
 public class ContractStorage
 {
@@ -28,7 +27,7 @@ public class ContractPallet
     public int Volume { get; set; }
     public DateTime ExpirationDate { get; set; }
     public string? Id { get; set; }
-    public DateTime ProductionDate { get; set; }
+    //public DateTime ProductionDate { get; set; }
     public int Height { get; set; }
     public int Width { get; set; }
     public int Length { get; set; }

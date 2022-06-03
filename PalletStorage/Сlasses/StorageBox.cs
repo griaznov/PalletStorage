@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using static System.Console;
 
-namespace Ex.PalletStorage;
+namespace PalletStorage;
 
 public class StorageBox : UniversalBox
 {
@@ -51,20 +51,9 @@ public class StorageBox : UniversalBox
         }
     }
 
-    public virtual string ID
-    {
-        get { return id; }
-    }
-
-    public virtual DateTime ProductionDate
-    {
-        get { return productionDate; }
-    }
-
-    public virtual DateTime ExpirationDate
-    {
-        get { return expirationDate; }
-    }
+    public virtual string ID { get { return id; } }
+    public virtual DateTime ProductionDate { get { return productionDate; } }
+    public virtual DateTime ExpirationDate { get { return expirationDate; } }
 
     public override void Print()
     {

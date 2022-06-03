@@ -1,6 +1,6 @@
 ﻿using static System.Console;
 
-namespace Ex.PalletStorage;
+namespace PalletStorage;
 
 internal class Storage
 {
@@ -8,10 +8,10 @@ internal class Storage
     private string name;
 
     // Boxes. Free boxes without owner (Pallet)
-    private IDictionary<string, StorageBox>? boxes;
+    private IDictionary<string, StorageBox> boxes;
 
     // Pallets. Pallets can contain boxes.
-    private IDictionary<string, Pallet>? pallets;
+    private IDictionary<string, Pallet> pallets;
 
     public Storage(string? name, 
         string id = "",

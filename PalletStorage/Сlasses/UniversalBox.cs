@@ -1,6 +1,6 @@
 ﻿using static System.Console;
 
-namespace Ex.PalletStorage;
+namespace PalletStorage;
 
 public class UniversalBox : IUniversalBox
 {
@@ -17,8 +17,8 @@ public class UniversalBox : IUniversalBox
         // Verifying parameters
         if (!IsValidBoxParams(width, length, height) || !IsValidWeight(weight))
         {
-            throw new ArgumentOutOfRangeException(
-                "You need to enter the following required parameters: width, length, height, weight!");
+            string errorMessage = "You need to enter the following required parameters: width, length, height, weight!";
+            throw new ArgumentOutOfRangeException(errorMessage);
         }
 
         this.height = height;
@@ -50,10 +50,7 @@ public class UniversalBox : IUniversalBox
         get { return weight; }
     }
 
-    public virtual double Volume
-    {
-        get { return volume; }
-    }
+    public virtual double Volume{ get { return volume; } }
 
     public virtual void Print()
     {

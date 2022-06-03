@@ -1,5 +1,5 @@
 ﻿
-namespace Ex.PalletStorage;
+namespace PalletStorage;
 
 internal class TestGenerator
 {
@@ -19,22 +19,22 @@ internal class TestGenerator
         storage.AddPallet(4, 3, 3);
         storage.AddPallet(3, 3, 5);
 
-        if ((pallet1 is not null) && (Box1 is not null))
+        if (pallet1 is not null && Box1 is not null)
         {
             storage.MoveBoxToPallet(Box1.ID, pallet1.ID);
         }
 
-        if ((pallet1 is not null) && (Box2 is not null))
+        if (pallet1 is not null && Box2 is not null)
         {
             storage.MoveBoxToPallet(Box2.ID, pallet1.ID);
         }
 
-        if ((pallet2 is not null) && (Box3 is not null))
+        if (pallet2 is not null && Box3 is not null)
         {
             storage.MoveBoxToPallet(Box3.ID, pallet2.ID);
         }
 
-        if ((pallet2 is not null) && (Box4 is not null))
+        if (pallet2 is not null && Box4 is not null)
         {
             storage.MoveBoxToPallet(Box4.ID, pallet2.ID);
         }
