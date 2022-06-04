@@ -1,11 +1,6 @@
 ﻿namespace PalletStorage;
 
-interface IUniversalBox
-{
-    //public IUniversalBox Create();
-}
-
-public interface IFileStorage
+public interface IStorageJsonSerializer
 {
     public void WriteToJsonFile<T>(T value, string fileName);
     public T? ReadFromJsonFile<T>(string fileName);

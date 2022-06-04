@@ -2,14 +2,13 @@
 
 namespace PalletStorage;
 
-public class UniversalBox : IUniversalBox
+public class UniversalBox
 {
     // fields
     protected double height; // высота
     protected double width; // ширина
     protected double length;
     protected double weight; // вес
-
     protected double volume;
 
     public UniversalBox(double width, double length, double height, double weight)
@@ -30,26 +29,10 @@ public class UniversalBox : IUniversalBox
     }
 
     // properties
-    public virtual double Height
-    {
-        get { return height; }
-    }
-
-    public virtual double Width
-    {
-        get { return width; }
-    }
-
-    public virtual double Length
-    {
-        get { return length; }
-    }
-
-    public virtual double Weight
-    {
-        get { return weight; }
-    }
-
+    public virtual double Height { get { return height; } }
+    public virtual double Width { get { return width; } }
+    public virtual double Length { get { return length; } }
+    public virtual double Weight { get { return weight; } }
     public virtual double Volume{ get { return volume; } }
 
     public virtual void Print()

@@ -1,17 +1,18 @@
 ﻿using static System.Console;
 using PalletStorage;
 
-
 // Generate test values in Storage
 Storage storage = TestGenerator.GenerateTestStorage();
+
+WriteLine($"A new Storage test collection was generated:");
 storage.Print();
 
 // Save Storage in file
-FileStorage storageToFile = new();
+FileStorage fileStorage = new();
+fileStorage.WriteToFile(storage);
 
 // Read from file in new object
-storageToFile.WriteStorageToFile(storage);
-Storage? storageConverted = storageToFile.ReadStorageFromFile();
+Storage? storageConverted = fileStorage.ReadFromFile<Storage>();
 
 if (storageConverted is not null)
 {
@@ -19,8 +20,8 @@ if (storageConverted is not null)
     WriteLine($"Successful conversion from json to Storage");
 }
 
-// Read from file in new Contract object for cinversion in Storage
-ContractStorage? storageConvertedToContract = storageToFile.ReadContractStorageFromFile();
+// Read from file in new Contract-object for conversion to Storage
+ContractStorage? storageConvertedToContract = fileStorage.ReadFromFile<ContractStorage>();
 
 if (storageConvertedToContract is not null)
 {
