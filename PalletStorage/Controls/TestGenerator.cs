@@ -21,22 +21,22 @@ internal class TestGenerator
 
         if (pallet1 is not null && Box1 is not null)
         {
-            storage.MoveBoxToPallet(Box1.ID, pallet1.ID);
+            storage.MoveBoxToPallet(Box1, pallet1);
         }
 
         if (pallet1 is not null && Box2 is not null)
         {
-            storage.MoveBoxToPallet(Box2.ID, pallet1.ID);
+            storage.MoveBoxToPallet(Box2, pallet1);
         }
 
         if (pallet2 is not null && Box3 is not null)
         {
-            storage.MoveBoxToPallet(Box3.ID, pallet2.ID);
+            storage.MoveBoxToPallet(Box3, pallet2);
         }
 
         if (pallet2 is not null && Box4 is not null)
         {
-            storage.MoveBoxToPallet(Box4.ID, pallet2.ID);
+            storage.MoveBoxToPallet(Box4, pallet2);
         }
 
         return storage;

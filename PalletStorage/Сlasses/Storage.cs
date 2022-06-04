@@ -2,12 +2,12 @@
 
 namespace PalletStorage;
 
-internal class Storage
+public class Storage
 {
     private string id;
     private string name;
 
-    // Boxes. Free boxes without owner (Pallet)
+    // Boxes.
     private IDictionary<string, StorageBox> boxes;
 
     // Pallets. Pallets can contain boxes.
@@ -18,52 +18,20 @@ internal class Storage
         IDictionary<string, StorageBox>? boxes = null,
         IDictionary<string, Pallet>? pallets = null)
     {
-        this.boxes = boxes;
-        this.pallets = pallets;
+        this.boxes = boxes ?? new Dictionary<string, StorageBox>();
+        this.pallets = pallets ?? new Dictionary<string, Pallet>();
 
-        if (string.IsNullOrEmpty(name))
-        {
-            name = "Main storage";
-        }
-
-        if (boxes == null)
-        {
-            this.boxes = new Dictionary<string, StorageBox>();
-        }
-
-        if (pallets == null)
-        {
-            this.pallets = new Dictionary<string, Pallet>();
-        }
-
-        if (string.IsNullOrEmpty(id))
-        {
-            id = Guid.NewGuid().ToString();
-        }
+        if (string.IsNullOrEmpty(name)) { name = "Main storage"; }
+        if (string.IsNullOrEmpty(id)) { id = Guid.NewGuid().ToString(); }
 
         this.id = id;
         this.name = name;
     }
 
-    public virtual string ID
-    {
-        get { return id; }
-    }
-
-    public virtual string Name
-    {
-        get { return name; }
-    }
-
-    public virtual IDictionary<string, StorageBox> Boxes
-    {
-        get { return boxes; }
-    }
-
-    public virtual IDictionary<string, Pallet> Pallets
-    {
-        get { return pallets; }
-    }
+    public virtual string ID { get { return id; } }
+    public virtual string Name { get { return name; } }
+    public virtual IDictionary<string, StorageBox> Boxes { get { return boxes; } }
+    public virtual IDictionary<string, Pallet> Pallets { get { return pallets; } }
 
     public Pallet? AddPallet(double width, double length, double height)
     {
@@ -104,10 +72,10 @@ internal class Storage
 
     public void Print()
     {
-        WriteLine($"Storage: {name}, with free boxes: {boxes.Count}, pallets: {pallets.Count}");
+        WriteLine($"Storage: {name}, with boxes: {boxes.Count}, pallets: {pallets.Count}");
         WriteLine("");
 
-        WriteLine("Free Boxes:");
+        WriteLine("Boxes:");
         foreach (var keyValue in boxes)
         {
             Write(" ");
@@ -117,16 +85,10 @@ internal class Storage
         WriteLine("Pallets:");
         foreach (var keyValue in pallets)
         {
-            var boxesOnPallet = keyValue.Value;
+            var palett = keyValue.Value;
 
             Write(" ");
-            boxesOnPallet.Print();
-
-            foreach (var boxKeyValue in pallets)
-            {
-                Write("  ");
-                boxKeyValue.Value.Print();
-            }
+            palett.Print();
         }
     }
 
@@ -150,29 +112,18 @@ internal class Storage
         return foundPallet;
     }
 
-    public bool MoveBoxToPallet(string boxID, string palletID)
+    public void MoveBoxToPallet(StorageBox box, Pallet pallet)
     {
-        var box = FindBox(boxID);
-
-        if (box == null) { return false; }
-
-        var pallet = FindPallet(palletID);
-
-        if (pallet == null) { return false; }
-
         // Moving the box on the pallet
-        if (!pallet.AddBox(box))
+        if (!boxes.ContainsKey(box.ID))
         {
-            return false;
+            boxes.Add(box.ID, box); 
         }
 
-        // And removal from free boxes
-        if (!boxes.Remove(boxID))
+        if (!pallet.Boxes.Contains(box))
         {
-            return false;
+            pallet.AddBox(box);
         }
-
-        return true;
     }
 
     public void ReportPalletsOrderByExpirationAndWeight()

@@ -72,17 +72,17 @@ public class Pallet : UniversalBox
         WriteLine(stringBuilder.ToString());
     }
 
-    public bool AddBox(StorageBox? box)
+    public void AddBox(StorageBox box)
     {
-        if ((this == null) || (box == null))
-        {
-            WriteLine($"The pallet and the box must be identified!");
-            return false; 
-        }
+        //if ((this == null) || (box == null))
+        //{
+        //    WriteLine($"The pallet and the box must be identified!");
+        //    return false; 
+        //}
 
         boxes.Add(box);
 
-        return true;
+        //return true;
     }
 
     public static Pallet? Create(double width,

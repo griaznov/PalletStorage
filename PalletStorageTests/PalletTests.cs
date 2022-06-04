@@ -7,15 +7,15 @@ public class PalletTests
     [Fact(DisplayName = "1. Creating a normal pallet and checking the volume count")]
     public void CreationPallet()
     {
-            Pallet? pallet = Pallet.Create(2, 3, 4);
+        Pallet? pallet = Pallet.Create(2, 3, 4);
 
-            if (pallet == null)
-            {
-                Assert.True(false, "False with Create() Pallet!");
-                return;
-            }
+        if (pallet == null)
+        {
+            Assert.True(false, "False with Create() Pallet!");
+            return;
+        }
 
-            Assert.Equal(24, pallet.Volume);
+        Assert.Equal(24, pallet.Volume);
     }
 
     [Fact(DisplayName = "2. Add box to pallet")]
@@ -37,9 +37,9 @@ public class PalletTests
             return;
         }
 
-        bool result = pallet.AddBox(box);
+        pallet.AddBox(box);
 
-        Assert.True(result);
+        Assert.Contains(box, pallet.Boxes);
     }
 
     [Fact(DisplayName = "3. Checking volume and weight calculation for pallet")]
@@ -107,5 +107,4 @@ public class PalletTests
         // Minimum value from boxes
         Assert.Equal(lessDate, pallet.ExpirationDate);
     }
-
 }
