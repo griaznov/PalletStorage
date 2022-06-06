@@ -11,8 +11,8 @@ public class Pallet : UniversalBox
     protected string id;
     private readonly List<StorageBox> boxes = new();
 
-    public Pallet(double width, double length, double height, double weight,
-        //DateTime productionDate = default,
+    public Pallet(double width, double length, double height,
+        double weight = 0,
         DateTime expirationDate = default,
         string id = "",
         double volume = 0,
@@ -39,20 +39,6 @@ public class Pallet : UniversalBox
     public override double Weight { get { return (weight + boxes.Sum(b => b.Weight)); } }
     public override double Volume { get { return (volume + boxes.Sum(b => b.Volume)); } }
 
-    //public DateTime MaxExpirationDate
-    //{
-    //    get { 
-
-    //        if (boxes.Count == 0)
-    //        {
-    //            return DateTime.MinValue;
-    //        }
-
-    //        return boxes.Max(b => b.ExpirationDate); 
-        
-    //    }
-    //}
-
     public DateTime ExpirationDate
     {
         get 
@@ -74,31 +60,13 @@ public class Pallet : UniversalBox
 
     public void AddBox(StorageBox box)
     {
-        //if ((this == null) || (box == null))
-        //{
-        //    WriteLine($"The pallet and the box must be identified!");
-        //    return false; 
-        //}
-
         boxes.Add(box);
-
-        //return true;
     }
 
-    public static Pallet? Create(double width,
-        double length,
-        double height
-        //,
-        //DateTime prodDate = default
-        )
+    public static Pallet? Create(double width, double length, double height)
     {
         // default weight value for the pallet
         double weight = defaultPalletWeight;
-
-        //if (prodDate == DateTime.MinValue)
-        //{
-        //    prodDate = DateTime.Today;
-        //}
 
         try
         {

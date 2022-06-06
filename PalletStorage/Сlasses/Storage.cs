@@ -4,14 +4,14 @@ namespace PalletStorage;
 
 public class Storage
 {
-    private string id;
-    private string name;
+    private readonly string id;
+    private readonly string name;
 
     // Boxes.
-    private IDictionary<string, StorageBox> boxes;
+    private readonly IDictionary<string, StorageBox> boxes;
 
     // Pallets. Pallets can contain boxes.
-    private IDictionary<string, Pallet> pallets;
+    private readonly IDictionary<string, Pallet> pallets;
 
     public Storage(string? name, 
         string id = "",

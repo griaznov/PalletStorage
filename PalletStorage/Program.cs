@@ -1,36 +1,17 @@
-﻿using static System.Console;
-using PalletStorage;
+﻿using PalletStorage;
 
-// Generate test values in Storage
-Storage storage = TestGenerator.GenerateTestStorage();
+// Read from file or generate new storage collection - // StorageCollection.CollectionForWork()
+Storage storage = await StorageCollection.CollectionForWorkAsync();
 
-WriteLine($"A new Storage test collection was generated:");
+// Output of information about the collection
 storage.Print();
 
-// Save Storage in file
-FileStorage fileStorage = new();
-fileStorage.WriteToFile(storage);
-
-// Read from file in new object
-Storage? storageConverted = fileStorage.ReadFromFile<Storage>();
-
-if (storageConverted is not null)
-{
-    WriteLine("");
-    WriteLine($"Successful conversion from json to Storage");
-}
-
-// Read from file in new Contract-object for conversion to Storage
-ContractStorage? storageConvertedToContract = fileStorage.ReadFromFile<ContractStorage>();
-
-if (storageConvertedToContract is not null)
-{
-    WriteLine("");
-    WriteLine($"Successful conversion from json to ContractStorage");
-}
+// Save Storage in file - // StorageCollection.SaveCollection(storage);
+StorageCollection.SaveCollectionAsync(storage);
 
 // Reports
 storage.ReportTopWithMaxExpirationOrderByVolume(3);
 storage.ReportPalletsOrderByExpirationAndWeight();
+
 
 

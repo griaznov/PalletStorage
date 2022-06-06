@@ -2,7 +2,7 @@
 
 namespace PalletStorage;
 
-internal class FileStorage : IFileStorage
+public class FileStorage : IFileStorage
 {
     private readonly string filePath = string.Empty;
 
@@ -21,9 +21,19 @@ internal class FileStorage : IFileStorage
         StorageJsonSerializer.WriteToJsonFile(inputObject, filePath);
     }
 
+    public async Task<T> WriteToFileAsync<T>(T inputObject)
+    {
+        return await StorageJsonSerializer.WriteToJsonFileAsync(inputObject, filePath);
+    }
+
     public T? ReadFromFile<T>()
     {
         return StorageJsonSerializer.ReadFromJsonFile<T>(filePath);
+    }
+
+    public async Task<T?> ReadFromFileAsync<T>()
+    {
+        return await StorageJsonSerializer.ReadFromJsonFileAsync<T>(filePath);
     }
 
 }
