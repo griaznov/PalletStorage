@@ -17,6 +17,7 @@ public static class PalletModelExtensions
         Length = input.Length,
         Height = input.Height,
         Weight = input.Weight,
+        Volume = input.Volume,
         Id = input.Id,
         Boxes = input.Boxes.Select(item => item.ToModel()).ToList(),
     };

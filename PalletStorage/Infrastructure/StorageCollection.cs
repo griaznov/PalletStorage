@@ -34,11 +34,11 @@ public static class StorageCollection
         return storage;
     }
 
-    public static async void SaveCollectionAsync(Storage storage)
+    public static async void SaveCollectionInModelAsync(Storage storage)
     {
         // Save Storage in file
         FileStorage fileStorage = new();
-        await fileStorage.WriteToFileAsync(storage);
+        await fileStorage.WriteToFileAsync(storage.ToModel());
     }
 
     public static void PrintPalletsOrderByExpirationAndWeight(this Storage storage)

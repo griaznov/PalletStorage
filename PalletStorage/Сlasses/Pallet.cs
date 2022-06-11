@@ -22,7 +22,6 @@ public class Pallet : UniversalBox
         : base(width, length, height, weight)
     {
         // default weight value for the pallet
-        //this.weight = DefaultPalletWeight;
         PalletWeight = DefaultPalletWeight;
         Boxes = boxes ?? new List<StorageBox>();
         Id = id;

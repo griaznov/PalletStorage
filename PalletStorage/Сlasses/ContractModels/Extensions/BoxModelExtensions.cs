@@ -11,6 +11,7 @@ public static class StorageBoxExtensions
         Length = input.Length,
         Height = input.Height,
         Weight = input.Weight,
+        Volume = input.Volume,
         ProductionDate = input.ProductionDate,
         ExpirationDate = input.ExpirationDate,
         Id = input.Id
