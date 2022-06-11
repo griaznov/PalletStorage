@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using static System.IO.Path;
-using static System.Console;
 
 namespace PalletStorage.Infrastructure;
 
@@ -45,5 +44,4 @@ public class StorageJsonSerializer
 
         return output;
     }
-
 }

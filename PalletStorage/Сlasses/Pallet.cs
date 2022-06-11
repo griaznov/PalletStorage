@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace PalletStorage.Сlasses;
+﻿namespace PalletStorage.Сlasses;
 
 public class Pallet : UniversalBox
 {
@@ -39,4 +37,3 @@ public class Pallet : UniversalBox
         return new Pallet(width, length, height, DefaultPalletWeight);
     }
 }
-

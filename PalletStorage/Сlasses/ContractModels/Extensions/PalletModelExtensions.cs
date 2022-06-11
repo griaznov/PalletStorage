@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace PalletStorage.Сlasses.ContractModels.Extensions;
+﻿namespace PalletStorage.Сlasses.ContractModels.Extensions;
 public static class PalletModelExtensions
 {
     public static Pallet FromModel(this PalletModel model) => new(
