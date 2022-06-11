@@ -2,11 +2,12 @@
 
 public class UniversalBox
 {
-    // fields
-    protected double width;
-    protected double length;
-    protected double weight;
-    protected double volume;
+    // auto properties
+    public virtual double Height { get; }
+    public virtual double Width { get; }
+    public virtual double Length { get; }
+    public virtual double Weight { get; }
+    public virtual double Volume { get; }
 
     public UniversalBox(double width, double length, double height, double weight)
     {
@@ -18,31 +19,10 @@ public class UniversalBox
         }
 
         Height = height;
-        this.width = width;
-        this.length = length;
-        this.weight = weight;
-
-        volume = height * width * length;
-    }
-
-    // properties
-    public virtual double Height { get; }
-
-    public virtual double Width => width;
-    public virtual double Length => length;
-    public virtual double Weight => weight;
-    public virtual double Volume => volume;
-
-    public static UniversalBox? Create(double width, double length, double height, double weight)
-    {
-        try
-        {
-            return new UniversalBox(width, length, height, weight);
-        }
-        catch
-        {
-            return null;
-        } 
+        Width = width;
+        Length = length;
+        Weight = weight;
+        Volume = height * width * length;
     }
 
     public static bool IsValidBoxParams(double width, double length, double height)

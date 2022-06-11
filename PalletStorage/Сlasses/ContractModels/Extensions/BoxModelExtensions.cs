@@ -3,7 +3,7 @@
 public static class StorageBoxExtensions
 {
     public static StorageBox FromModel(this BoxModel model) =>
-        new(model.Width, model.Length, model.Height, model.Weight, model.ProductionDate, model.ExpirationDate, model.Id, model.Volume);
+        new(model.Width, model.Length, model.Height, model.Weight, model.ProductionDate, model.ExpirationDate, model.Id);
 
     public static BoxModel ToModel(this StorageBox input) => new()
     {
