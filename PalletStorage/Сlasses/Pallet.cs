@@ -1,17 +1,17 @@
-﻿using System.Text;
-using System.Text.Json.Serialization;
-using static System.Console;
+﻿using System.Text.Json.Serialization;
 
-namespace PalletStorage;
+namespace PalletStorage.Сlasses;
 
 public class Pallet : UniversalBox
 {
-    private const double defaultPalletWeight = 30;
-    
-    protected string id;
+    private const double DefaultPalletWeight = 30;
+
+    private string id;
     private readonly List<StorageBox> boxes = new();
 
-    public Pallet(double width, double length, double height,
+    public Pallet(double width,
+        double length,
+        double height,
         double weight = 0,
         DateTime expirationDate = default,
         string id = "",
@@ -21,7 +21,7 @@ public class Pallet : UniversalBox
         : base(width, length, height, weight)
     {
         // default weight value for the pallet
-        this.weight = defaultPalletWeight;
+        this.weight = DefaultPalletWeight;
         this.boxes = boxes ?? new List<StorageBox>();
         this.id = id;
 
@@ -33,11 +33,11 @@ public class Pallet : UniversalBox
 
     // Pallet's own weight
     [JsonIgnore]
-    public virtual double PalletWeight { get { return weight; } }
-    public virtual string ID { get { return id; } }
-    public virtual List<StorageBox> Boxes { get { return boxes ?? new List<StorageBox>(); } }
-    public override double Weight { get { return (weight + boxes.Sum(b => b.Weight)); } }
-    public override double Volume { get { return (volume + boxes.Sum(b => b.Volume)); } }
+    public virtual double PalletWeight => weight;
+    public virtual string Id => id;
+    public virtual List<StorageBox> Boxes => boxes ?? new List<StorageBox>();
+    public override double Weight => (weight + boxes.Sum(b => b.Weight));
+    public override double Volume => (volume + boxes.Sum(b => b.Volume));
 
     public DateTime ExpirationDate
     {
@@ -48,16 +48,6 @@ public class Pallet : UniversalBox
         }
     }
 
-    public override void Print()
-    {
-        StringBuilder stringBuilder = new();
-
-        stringBuilder.AppendFormat($"Pallet: id: {id}, (w/l/h): {width}/{length}/{height}, weight: {Weight}, volume: {Volume},");
-        stringBuilder.AppendFormat($"exp.date: {ExpirationDate}, Count boxes: {boxes.Count}");
-
-        WriteLine(stringBuilder.ToString());
-    }
-
     public void AddBox(StorageBox box)
     {
         boxes.Add(box);
@@ -66,7 +56,7 @@ public class Pallet : UniversalBox
     public static Pallet? Create(double width, double length, double height)
     {
         // default weight value for the pallet
-        double weight = defaultPalletWeight;
+        double weight = DefaultPalletWeight;
 
         try
         {

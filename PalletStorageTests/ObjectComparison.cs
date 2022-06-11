@@ -1,23 +1,23 @@
 ﻿using Newtonsoft.Json;
 
-namespace PalletStorage;
+namespace PalletStorageTests;
 
 public class ObjectComparison
 {
     public static bool EqualByJson(object firstObject, object secondObject)
     {
-        string? firstData = JsonConvert.SerializeObject(firstObject);
-        string? secondData = JsonConvert.SerializeObject(secondObject);
+        var firstData = JsonConvert.SerializeObject(firstObject);
+        var secondData = JsonConvert.SerializeObject(secondObject);
 
         return firstData.Equals(secondData);
     }
 
-    public static bool EqualByProperties(object firstObject, object secondObjectj)
+    public static bool EqualByProperties(object firstObject, object secondObject)
     {
         Type firstType = firstObject.GetType();
         System.Reflection.PropertyInfo[] properties = firstType.GetProperties();
 
-        Type secondType = secondObjectj.GetType();
+        Type secondType = secondObject.GetType();
 
         bool isSame = true;
 
@@ -32,7 +32,7 @@ public class ObjectComparison
             }
 
             var firstValue = firstProperty.GetValue(firstObject);
-            var secondValue = secondProperty.GetValue(secondObjectj);
+            var secondValue = secondProperty.GetValue(secondObject);
 
             if (!object.Equals(firstValue, secondValue))
             {

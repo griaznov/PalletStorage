@@ -1,14 +1,12 @@
-﻿using static System.Console;
-
-namespace PalletStorage;
+﻿namespace PalletStorage.Сlasses;
 
 public class UniversalBox
 {
     // fields
-    protected double height; // высота
-    protected double width; // ширина
+    protected double height;
+    protected double width;
     protected double length;
-    protected double weight; // вес
+    protected double weight;
     protected double volume;
 
     public UniversalBox(double width, double length, double height, double weight)
@@ -16,7 +14,7 @@ public class UniversalBox
         // Verifying parameters
         if (!IsValidBoxParams(width, length, height) || !IsValidWeight(weight))
         {
-            string errorMessage = "You need to enter the following required parameters: width, length, height, weight!";
+            var errorMessage = "You need to enter the following required parameters: width, length, height, weight!";
             throw new ArgumentOutOfRangeException(errorMessage);
         }
 
@@ -29,16 +27,11 @@ public class UniversalBox
     }
 
     // properties
-    public virtual double Height { get { return height; } }
-    public virtual double Width { get { return width; } }
-    public virtual double Length { get { return length; } }
-    public virtual double Weight { get { return weight; } }
-    public virtual double Volume{ get { return volume; } }
-
-    public virtual void Print()
-    {
-        WriteLine($"Box: {width}/{length}/{height} (w/l/h), weight: {weight}, volume: {volume}");
-    }
+    public virtual double Height => height;
+    public virtual double Width => width;
+    public virtual double Length => length;
+    public virtual double Weight => weight;
+    public virtual double Volume => volume;
 
     public static UniversalBox? Create(double width, double length, double height, double weight)
     {
@@ -54,21 +47,11 @@ public class UniversalBox
 
     public static bool IsValidBoxParams(double width, double length, double height)
     {
-        if ((width <= 0) || (length <= 0) || (height <= 0))
-        {
-            return false;
-        }
-
-        return true;
+        return (!(width <= 0)) && (!(length <= 0)) && (!(height <= 0));
     }
 
     public static bool IsValidWeight(double weight)
     {
-        if (weight <= 0)
-        {
-            return false;
-        }
-
-        return true;
+        return !(weight <= 0);
     }
 }

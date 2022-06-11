@@ -1,7 +1,7 @@
-﻿namespace PalletStorage;
+﻿namespace PalletStorage.Interfaces;
 
 public interface IFileStorage
 {
-    public void WriteToFile<T>(T value);
-    public T? ReadFromFile<T>();
+    public Task<T> WriteToFileAsync<T>(T value);
+    public Task<T?> ReadFromFileAsync<T>();
 }

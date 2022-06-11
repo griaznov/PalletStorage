@@ -1,10 +1,11 @@
-﻿using static System.IO.Path;
+﻿using PalletStorage.Interfaces;
+using static System.IO.Path;
 
-namespace PalletStorage;
+namespace PalletStorage.Infrastructure;
 
 public class FileStorage : IFileStorage
 {
-    private readonly string filePath = string.Empty;
+    private readonly string filePath;
 
     public FileStorage(string filePath = "")
     {
@@ -16,19 +17,9 @@ public class FileStorage : IFileStorage
         this.filePath = filePath;
     }
 
-    public void WriteToFile<T>(T inputObject)
-    {
-        StorageJsonSerializer.WriteToJsonFile(inputObject, filePath);
-    }
-
     public async Task<T> WriteToFileAsync<T>(T inputObject)
     {
         return await StorageJsonSerializer.WriteToJsonFileAsync(inputObject, filePath);
-    }
-
-    public T? ReadFromFile<T>()
-    {
-        return StorageJsonSerializer.ReadFromJsonFile<T>(filePath);
     }
 
     public async Task<T?> ReadFromFileAsync<T>()

@@ -1,14 +1,15 @@
 ﻿using System.Text;
 using static System.Console;
 
-namespace PalletStorage;
+namespace PalletStorage.Сlasses;
 
 public class StorageBox : UniversalBox
 {
+    private const int MinDaysExpirationDate = 100;
+
     protected string id;
-    protected DateTime productionDate; // дата производства
-    protected DateTime expirationDate; // дата годности
-    private const int minDaysExpirationDate = 100;
+    protected DateTime productionDate;
+    protected DateTime expirationDate;
 
     public StorageBox(
         double width,
@@ -38,7 +39,7 @@ public class StorageBox : UniversalBox
         // the expiration date is calculated from the production date plus 100 days
         if (expirationDate == default)
         {
-            expirationDate = productionDate.AddDays(minDaysExpirationDate);
+            expirationDate = productionDate.AddDays(MinDaysExpirationDate);
         }
 
         this.productionDate = productionDate;
@@ -51,19 +52,9 @@ public class StorageBox : UniversalBox
         }
     }
 
-    public virtual string ID { get { return id; } }
-    public virtual DateTime ProductionDate { get { return productionDate; } }
-    public virtual DateTime ExpirationDate { get { return expirationDate; } }
-
-    public override void Print()
-    {
-        StringBuilder stringBuilder = new();
-
-        stringBuilder.AppendFormat($"Box: id: {id}, (w/l/h): {width}/{length}/{height}, weight: {weight}, volume: {volume}, ");
-        stringBuilder.AppendFormat($"prod.date: {productionDate}, exp.date: {expirationDate},");
-
-        WriteLine(stringBuilder.ToString());
-    }
+    public virtual string Id => id;
+    public virtual DateTime ProductionDate => productionDate;
+    public virtual DateTime ExpirationDate => expirationDate;
 
     public static StorageBox? Create(double width,
         double length,
@@ -84,11 +75,6 @@ public class StorageBox : UniversalBox
 
     public static bool ValidateDateParams(DateTime prodDate = default, DateTime expDate = default)
     {
-        if ((expDate == default) && (prodDate == default))
-        {
-            return false;
-        }
-        
-        return true;
+        return (expDate != default) || (prodDate != default);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PalletStorage;
+using PalletStorage.Сlasses;
 
 namespace PalletStorageTests;
 
@@ -34,7 +35,7 @@ public class StorageTests
             return;
         }
 
-        Assert.True(storage.Boxes.ContainsKey(box.ID), "The storage does not contain a new box!");
+        Assert.True(storage.Boxes.ContainsKey(box.Id), "The storage does not contain a new box!");
     }
 
     [Fact(DisplayName = "2. Add new pallet to storage")]
@@ -50,7 +51,7 @@ public class StorageTests
             return;
         }
 
-        Assert.True(storage.Pallets.ContainsKey(pallet.ID), "The storage does not contain a new pallet!");
+        Assert.True(storage.Pallets.ContainsKey(pallet.Id), "The storage does not contain a new pallet!");
     }
 
     [Fact(DisplayName = "2. Move a new box to pallet storage")]

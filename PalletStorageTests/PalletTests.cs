@@ -1,4 +1,5 @@
 ﻿using PalletStorage;
+using PalletStorage.Сlasses;
 
 namespace PalletStorageTests;
 

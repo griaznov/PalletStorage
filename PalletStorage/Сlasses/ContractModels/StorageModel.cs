@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace PalletStorage;
+namespace PalletStorage.Сlasses.ContractModels;
 
 public class StorageModel
 {
-    public string? ID { get; set; }
+    public string? Id { get; set; }
     public string? Name { get; set; }
     public IDictionary<string, BoxModel>? Boxes { get; set; }
     public IDictionary<string, PalletModel>? Pallets { get; set; }

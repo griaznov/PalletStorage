@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace PalletStorage;
+namespace PalletStorage.Сlasses.ContractModels;
 
 public class BoxModel
 {
-    public string? ID { get; set; }
+    public string? Id { get; set; }
     public DateTime ProductionDate { get; set; }
     public DateTime ExpirationDate { get; set; }
     public double Height { get; set; }

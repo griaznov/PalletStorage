@@ -1,4 +1,7 @@
 ﻿using PalletStorage;
+using PalletStorage.Infrastructure;
+using PalletStorage.Сlasses;
+using PalletStorage.Сlasses.Extensions;
 
 // Read from file or generate new storage collection - // StorageCollection.CollectionForWork()
 Storage storage = await StorageCollection.CollectionForWorkAsync();
