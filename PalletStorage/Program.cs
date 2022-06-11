@@ -1,5 +1,4 @@
-﻿
-using PalletStorage.Infrastructure;
+﻿using PalletStorage.Infrastructure;
 using PalletStorage.Сlasses;
 using PalletStorage.Сlasses.Extensions;
 
@@ -13,5 +12,5 @@ storage.Print();
 StorageCollection.SaveCollectionAsync(storage);
 
 // Reports
-storage.ReportTopWithMaxExpirationOrderByVolume(3);
-storage.ReportPalletsOrderByExpirationAndWeight();
+storage.PrintTopWithMaxExpirationOrderByVolume(3);
+storage.PrintPalletsOrderByExpirationAndWeight();

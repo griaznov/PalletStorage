@@ -7,9 +7,9 @@ public class StorageBox : UniversalBox
 {
     private const int MinDaysExpirationDate = 100;
 
-    protected string id;
-    protected DateTime productionDate;
-    protected DateTime expirationDate;
+    public Guid Id { get; }
+    public DateTime ProductionDate { get; }
+    public DateTime ExpirationDate { get; }
 
     public StorageBox(
         double width,
@@ -17,9 +17,8 @@ public class StorageBox : UniversalBox
         double height,
         double weight,
         DateTime productionDate = default,
-        DateTime expirationDate = default, 
-        string id = "",
-        double volume = 0) 
+        DateTime expirationDate = default,
+        Guid id = default) 
         : base(width, length, height, weight)
     {
         // Verifying parameters
@@ -28,7 +27,7 @@ public class StorageBox : UniversalBox
         {
             StringBuilder stringBuilder = new();
 
-            stringBuilder.AppendFormat($"It is required to specify the expiration date or production date! ");
+            stringBuilder.AppendFormat("It is required to specify the expiration date or production date! ");
             stringBuilder.AppendFormat($"Expiration date: {expirationDate}, Production date: {productionDate}");
             WriteLine(stringBuilder.ToString());
 
@@ -42,19 +41,12 @@ public class StorageBox : UniversalBox
             expirationDate = productionDate.AddDays(MinDaysExpirationDate);
         }
 
-        this.productionDate = productionDate;
-        this.expirationDate = expirationDate;
-        this.id = id;
+        ProductionDate = productionDate;
+        ExpirationDate = expirationDate;
+        Id = id;
 
-        if (string.IsNullOrEmpty(this.id))
-        {
-            this.id = Guid.NewGuid().ToString();
-        }
+        if (Id == default) { Id = Guid.NewGuid(); }
     }
-
-    public virtual string Id => id;
-    public virtual DateTime ProductionDate => productionDate;
-    public virtual DateTime ExpirationDate => expirationDate;
 
     public static StorageBox Create(double width,
         double length,
