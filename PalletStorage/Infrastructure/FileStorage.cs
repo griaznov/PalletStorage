@@ -22,9 +22,8 @@ public class FileStorage : IFileStorage
         return await StorageJsonSerializer.WriteToJsonFileAsync(inputObject, filePath);
     }
 
-    public async Task<T?> ReadFromFileAsync<T>()
+    public async Task<T> ReadFromFileAsync<T>()
     {
         return await StorageJsonSerializer.ReadFromJsonFileAsync<T>(filePath);
     }
-
 }

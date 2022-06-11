@@ -5,9 +5,6 @@ namespace PalletStorage.Сlasses;
 
 public class Storage
 {
-    private readonly string id;
-    private readonly string name;
-
     // Boxes.
     private readonly IDictionary<string, StorageBox> boxes;
 
@@ -25,32 +22,29 @@ public class Storage
         if (string.IsNullOrEmpty(name)) { name = "Main storage"; }
         if (string.IsNullOrEmpty(id)) { id = Guid.NewGuid().ToString(); }
 
-        this.id = id;
-        this.name = name;
+        Id = id;
+        Name = name;
     }
 
-    public virtual string Id => id;
-    public virtual string Name => name;
+    public virtual string Id { get; }
+
+    public virtual string Name { get; }
+
     public virtual IDictionary<string, StorageBox> Boxes => boxes;
     public virtual IDictionary<string, Pallet> Pallets => pallets;
 
-    public Pallet? AddPallet(double width, double length, double height)
+    public Pallet AddPallet(double width, double length, double height)
     {
         // Creating an element
-        Pallet? pallet = Pallet.Create(width, length, height);
+        var pallet = Pallet.Create(width, length, height);
 
         // Adding element to the Storage
-        if (pallet == null)
-        {
-            return null;
-        }
-
         pallets.Add(pallet.Id, pallet);
 
         return pallet;
     }
 
-    public StorageBox? AddBox(double width,
+    public StorageBox AddBox(double width,
         double length,
         double height,
         double weight,
@@ -58,37 +52,11 @@ public class Storage
         DateTime expDate = default)
     {
         // Creating an element
-        StorageBox? box = StorageBox.Create(width, length, height, weight, prodDate, expDate);
-
-        // Adding element to the Storage
-        if (box == null)
-        {
-            return null;
-        }
+        var box = StorageBox.Create(width, length, height, weight, prodDate, expDate);
 
         boxes.Add(box.Id, box);
         
         return box;
-    }
-
-    public StorageBox? FindBox(string boxId)
-    {
-        if (!boxes.TryGetValue(boxId, out StorageBox? foundВox))
-        {
-            WriteLine($"The Storage could not find a box with ID: {boxId}");
-        }
-        
-        return foundВox;
-    }
-
-    public Pallet? FindPallet(string palletId)
-    {
-        if (!pallets.TryGetValue(palletId, out Pallet? foundPallet))
-        {
-            WriteLine($"The Storage could not find a pallet with ID: {palletId}");
-        }
-
-        return foundPallet;
     }
 
     public void MoveBoxToPallet(StorageBox box, Pallet pallet)
@@ -108,7 +76,7 @@ public class Storage
     public void ReportPalletsOrderByExpirationAndWeight()
     {
         WriteLine();
-        WriteLine($"Report: Pallets ordered by Expiration; with boxes, ordered by weight");
+        WriteLine("Report: Pallets ordered by Expiration; with boxes, ordered by weight");
         WriteLine();
 
         var query = Pallets
@@ -122,7 +90,7 @@ public class Storage
 
             foreach (var itemPallet in item.sortValues)
             {
-                PalletExtensions.Print(itemPallet.Value);
+                itemPallet.Value.Print();
             }
         }
     }
@@ -133,14 +101,14 @@ public class Storage
         WriteLine($"Report: {countRecords} Pallet with Max expiration, ordered by volume");
         WriteLine();
 
-        var qery = Pallets
+        var query = Pallets
             .OrderByDescending(p => p.Value.ExpirationDate)
             .Take(countRecords)
             .OrderBy(p => p.Value.Volume);
 
-        foreach (var item in qery)
+        foreach (var item in query)
         {
-            PalletExtensions.Print(item.Value);
+            item.Value.Print();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using PalletStorage.Сlasses;
 using PalletStorage.Сlasses.ContractModels;
+using PalletStorage.Сlasses.ContractModels.Extensions;
 
 namespace PalletStorage.Infrastructure;
 
@@ -8,24 +9,19 @@ public class StorageCollection
     public static async Task<Storage> CollectionForWorkAsync()
     {
         FileStorage fileStorage = new();
+        Storage storage;
 
-        // Read from file in new contract-model for conversion to Storage
-        StorageModel? storageFromFile = await fileStorage.ReadFromFileAsync<StorageModel>();
+        try
+        {
+            // Read from file in new contract-model for conversion to Storage
+            var storageFromFile = await fileStorage.ReadFromFileAsync<StorageModel>();
 
-        if (storageFromFile == null)
+            // Conversion from model to Storage
+            storage = storageFromFile.FromModel();
+        }
+        catch
         {
             Console.WriteLine("False with reading Storage from file!");
-
-            // Generate test values in Storage
-            return StorageCollectionGenerator.GenerateStorage();
-        }
-
-        // Conversion from model to Storage
-        Storage? storage = (Storage?)storageFromFile;
-
-        if (storage == null)
-        {
-            Console.WriteLine("False with convert Storage from file!");
 
             // Generate test values in Storage
             return StorageCollectionGenerator.GenerateStorage();

@@ -1,16 +1,9 @@
-﻿using Newtonsoft.Json;
-
-namespace PalletStorage.Сlasses.ContractModels;
+﻿namespace PalletStorage.Сlasses.ContractModels;
 
 public class StorageModel
 {
-    public string? Id { get; set; }
-    public string? Name { get; set; }
-    public IDictionary<string, BoxModel>? Boxes { get; set; }
-    public IDictionary<string, PalletModel>? Pallets { get; set; }
-
-    public static explicit operator Storage?(StorageModel inputObject)
-    {
-        return JsonConvert.DeserializeObject<Storage>(JsonConvert.SerializeObject(inputObject));
-    }
+    public string Id { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public IDictionary<string, BoxModel> Boxes { get; set; } = new Dictionary<string, BoxModel>();
+    public IDictionary<string, PalletModel> Pallets { get; set; } = new Dictionary<string, PalletModel>();
 }

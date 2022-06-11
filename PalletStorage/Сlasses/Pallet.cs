@@ -6,7 +6,7 @@ public class Pallet : UniversalBox
 {
     private const double DefaultPalletWeight = 30;
 
-    private string id;
+    private readonly string id;
     private readonly List<StorageBox> boxes = new();
 
     public Pallet(double width,
@@ -35,37 +35,20 @@ public class Pallet : UniversalBox
     [JsonIgnore]
     public virtual double PalletWeight => weight;
     public virtual string Id => id;
-    public virtual List<StorageBox> Boxes => boxes ?? new List<StorageBox>();
+    public virtual List<StorageBox> Boxes => boxes;
     public override double Weight => (weight + boxes.Sum(b => b.Weight));
     public override double Volume => (volume + boxes.Sum(b => b.Volume));
 
-    public DateTime ExpirationDate
-    {
-        get 
-        { 
-            if (boxes.Count == 0) { return DateTime.MinValue; }
-            return boxes.Min(box => box.ExpirationDate); 
-        }
-    }
+    public DateTime ExpirationDate => boxes.Count == 0 ? default : boxes.Min(box => box.ExpirationDate);
 
     public void AddBox(StorageBox box)
     {
         boxes.Add(box);
     }
 
-    public static Pallet? Create(double width, double length, double height)
+    public static Pallet Create(double width, double length, double height)
     {
-        // default weight value for the pallet
-        double weight = DefaultPalletWeight;
-
-        try
-        {
-            return new Pallet(width, length, height, weight);
-        }
-        catch
-        {
-            return null;
-        }
+        return new Pallet(width, length, height, DefaultPalletWeight);
     }
 }
 

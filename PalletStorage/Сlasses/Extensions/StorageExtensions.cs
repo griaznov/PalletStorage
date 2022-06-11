@@ -12,7 +12,7 @@ public static class StorageExtensions
         WriteLine("Boxes:");
         foreach (var keyValue in storage.Boxes)
         {
-            Write(" ");
+            Write("\t");
             keyValue.Value.Print();
         }
 
@@ -21,7 +21,7 @@ public static class StorageExtensions
         {
             var pallet = keyValue.Value;
 
-            Write(" ");
+            Write("\t");
             pallet.Print();
         }
     }

@@ -56,21 +56,14 @@ public class StorageBox : UniversalBox
     public virtual DateTime ProductionDate => productionDate;
     public virtual DateTime ExpirationDate => expirationDate;
 
-    public static StorageBox? Create(double width,
+    public static StorageBox Create(double width,
         double length,
         double height,
         double weight,
         DateTime prodDate = default,
         DateTime expDate = default)
     {
-        try
-        {
-            return new StorageBox(width, length, height, weight, prodDate, expDate);
-        }
-        catch
-        {
-            return null;
-        }
+        return new StorageBox(width, length, height, weight, prodDate, expDate);
     }
 
     public static bool ValidateDateParams(DateTime prodDate = default, DateTime expDate = default)

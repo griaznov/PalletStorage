@@ -19,7 +19,7 @@ public class ObjectComparison
 
         Type secondType = secondObject.GetType();
 
-        bool isSame = true;
+        var isSame = true;
 
         foreach (var firstProperty in properties)
         {

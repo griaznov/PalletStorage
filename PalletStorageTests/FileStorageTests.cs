@@ -1,7 +1,9 @@
-﻿using static System.IO.Path;
+﻿using Xunit;
+using static System.IO.Path;
 using PalletStorage.Infrastructure;
 using PalletStorage.Сlasses;
 using PalletStorage.Сlasses.ContractModels;
+using PalletStorage.Сlasses.ContractModels.Extensions;
 
 namespace PalletStorageTests;
 
@@ -18,22 +20,22 @@ public class FileStorageTests
         file.Delete();
     }
 
-    [Fact(DisplayName = "1. Writing to a file Box and Pallet objects with true result")]
+    [Fact(DisplayName = "1. Writing to a file Box objects with true result")]
     public async void CanWriteBoxInFile()
     {
+        // Arrange
         var tempFilePath = TempFilePath();
-
-        StorageBox box = new(2, 3, 4, 1, DateTime.Today, DateTime.Today);
-
-        FileStorage fileStorage = new(tempFilePath);
-        
-        await fileStorage.WriteToFileAsync(box);
-
-        Assert.True(File.Exists(tempFilePath));
+        var fileStorage = new FileStorage(tempFilePath);
+        var box = new StorageBox(2, 3, 4, 1, DateTime.Today, DateTime.Today);
 
         try
         {
+            // Act
+            await fileStorage.WriteToFileAsync(box);
             var text = await File.ReadAllTextAsync(tempFilePath);
+
+            // Assert
+            Assert.True(File.Exists(tempFilePath));
             Assert.NotEmpty(text);
         }
         finally
@@ -45,23 +47,19 @@ public class FileStorageTests
     [Fact(DisplayName = "2. Writing to a file Pallet objects with true result")]
     public async void CanWritePalletInFile()
     {
+        // Arrange
         var tempFilePath = TempFilePath();
-
-        Pallet? pallet = Pallet.Create(2, 3, 4);
-        if (pallet == null)
-        {
-            Assert.True(false, "False with Create() Pallet!");
-            return;
-        }
-
-        FileStorage fileStorage = new(tempFilePath);
+        var pallet = Pallet.Create(2, 3, 4);
+        var fileStorage = new FileStorage(tempFilePath);
         
-        await fileStorage.WriteToFileAsync(pallet);
-
         try
         {
-            Assert.True(File.Exists(tempFilePath));
+            // Act
+            await fileStorage.WriteToFileAsync(pallet);
             var text = await File.ReadAllTextAsync(tempFilePath);
+
+            // Assert
+            Assert.True(File.Exists(tempFilePath));
             Assert.NotEmpty(text);
         }
         finally
@@ -73,32 +71,20 @@ public class FileStorageTests
     [Fact(DisplayName = "3. Box: Serialization and deserialization from the file is successful")]
     public async Task SerializeDeserializeBoxInFileAsync()
     {
+        // Arrange
         var tempFilePath = TempFilePath();
+        var fileStorage = new FileStorage(tempFilePath);
+        var testObject = new StorageBox(2, 3, 4, 1, DateTime.Today, DateTime.Today);
 
-        StorageBox testObject = new(2, 3, 4, 1, DateTime.Today, DateTime.Today);
-        
-        FileStorage fileStorage = new(tempFilePath);
-        
-        await fileStorage.WriteToFileAsync(testObject);
+        await fileStorage.WriteToFileAsync(testObject.ToModel());
 
         try
         {
-            BoxModel? objectFromFile = await fileStorage.ReadFromFileAsync<BoxModel>();
+            // Act
+            var objectFromFile = await fileStorage.ReadFromFileAsync<BoxModel>();
+            var convertedObject = objectFromFile.FromModel();
 
-            if (objectFromFile == null)
-            {
-                Assert.True(false, "False with reading box from file!");
-                return;
-            }
-
-            StorageBox? convertedObject = (StorageBox?)objectFromFile;
-
-            if (convertedObject == null)
-            {
-                Assert.NotNull(convertedObject);
-                return;
-            }
-            
+            // Assert
             Assert.True(ObjectComparison.EqualByJson(testObject, convertedObject), "Box from the file is not the same!");
         }
         finally
@@ -110,39 +96,21 @@ public class FileStorageTests
     [Fact(DisplayName = "4. Pallet: Serialization and deserialization from the file is successful")]
     public async void SerializeDeserializePalletInFile()
     {
+        // Arrange
         var tempFilePath = TempFilePath();
-
-        Pallet? testObject = Pallet.Create(2, 3, 4);
-
-        if (testObject == null)
-        {
-            Assert.True(false, "False with Create() Pallet!");
-            return;
-        }
-
         FileStorage fileStorage = new(tempFilePath);
-        
-        await fileStorage.WriteToFileAsync(testObject);
+        var testObject = Pallet.Create(2, 3, 4);
+
+        await fileStorage.WriteToFileAsync(testObject.ToModel());
 
         try
         {
-            PalletModel? objectFromFile = await fileStorage.ReadFromFileAsync<PalletModel>();
+            // Act
+            var objectFromFile = await fileStorage.ReadFromFileAsync<PalletModel>();
+            var convertedObject = objectFromFile.FromModel();
 
-            if (objectFromFile == null)
-            {
-                Assert.True(false, "False with reading Pallet from file!");
-                return;
-            }
-
-            Pallet? convertedObject = (Pallet?)objectFromFile;
-
-            if (convertedObject == null)
-            {
-                Assert.NotNull(convertedObject);
-                return;
-            }
-
-            Assert.True(ObjectComparison.EqualByJson(testObject, convertedObject), "Pallet readed from the file is not the same!");
+            // Assert
+            Assert.True(ObjectComparison.EqualByJson(testObject, convertedObject), "Pallet from the file is not the same!");
         }
         finally
         {
@@ -153,32 +121,20 @@ public class FileStorageTests
     [Fact(DisplayName = "5. Storage: Serialization and deserialization from the file is successful")]
     public async void SerializeDeserializeStorageInFile()
     {
+        // Arrange
         var tempFilePath = TempFilePath();
-
-        Storage testObject = StorageCollectionGenerator.GenerateStorage();
-
         FileStorage fileStorage = new(tempFilePath);
-        
-        await fileStorage.WriteToFileAsync(testObject);
+        var testObject = StorageCollectionGenerator.GenerateStorage();
+
+        await fileStorage.WriteToFileAsync(testObject.ToModel());
 
         try
         {
-            StorageModel? objectFromFile = await fileStorage.ReadFromFileAsync<StorageModel>();
+            // Act
+            var objectFromFile = await fileStorage.ReadFromFileAsync<StorageModel>();
+            var convertedObject = objectFromFile.FromModel();
 
-            if (objectFromFile == null)
-            {
-                Assert.True(false, "False with reading Storage from file!");
-                return;
-            }
-
-            Storage? convertedObject = (Storage?)objectFromFile;
-
-            if (convertedObject == null)
-            {
-                Assert.NotNull(convertedObject);
-                return;
-            }
-
+            // Assert
             Assert.True(ObjectComparison.EqualByJson(testObject, convertedObject), "Storage from the file is not the same!");
         }
         finally

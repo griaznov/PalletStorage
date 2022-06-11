@@ -28,24 +28,19 @@ public class StorageJsonSerializer
         return input;
     }
 
-    public static async Task<T?> ReadFromJsonFileAsync<T>(string fileName)
+    public static async Task<T> ReadFromJsonFileAsync<T>(string fileName)
     {
-        T? output;
-
         if (!File.Exists(fileName))
         {
-            WriteLine($"File {fileName} not exist!");
-            return default;
+            throw new Exception($"File {fileName} not exist!");
         }
 
-        await using (Stream fileStream = File.OpenRead(fileName))
-        {
-           output = await JsonSerializer.DeserializeAsync<T>(fileStream, MainJsonOptions());
-        }
+        await using Stream fileStream = File.OpenRead(fileName);
+        var output = await JsonSerializer.DeserializeAsync<T>(fileStream, MainJsonOptions());
 
         if (output == null)
         {
-            WriteLine($"Error Deserialize from file {fileName} to {typeof(T)}!");
+            throw new Exception($"Error Deserialize from file {fileName} to {typeof(T)}!");
         }
 
         return output;

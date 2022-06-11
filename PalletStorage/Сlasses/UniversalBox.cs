@@ -3,7 +3,6 @@
 public class UniversalBox
 {
     // fields
-    protected double height;
     protected double width;
     protected double length;
     protected double weight;
@@ -18,7 +17,7 @@ public class UniversalBox
             throw new ArgumentOutOfRangeException(errorMessage);
         }
 
-        this.height = height;
+        Height = height;
         this.width = width;
         this.length = length;
         this.weight = weight;
@@ -27,7 +26,8 @@ public class UniversalBox
     }
 
     // properties
-    public virtual double Height => height;
+    public virtual double Height { get; }
+
     public virtual double Width => width;
     public virtual double Length => length;
     public virtual double Weight => weight;
