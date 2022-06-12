@@ -56,4 +56,20 @@ public class StorageTests
         // Assert
         Assert.True(pallet.Boxes.Contains(box), "The pallet in storage does not contain a new box!");
     }
+
+    [Fact(DisplayName = "5. Move 2 equal boxes to pallet storage")]
+    public void MoveTwoBoxesToPallet()
+    {
+        // Arrange
+        Storage storage = new("Test storage");
+        Pallet pallet = storage.AddPallet(4, 4, 4);
+        StorageBox box = storage.AddBox(2, 2, 3, 1, new DateTime(2000, 1, 1));
+
+        // Act
+        storage.MoveBoxToPallet(box, pallet);
+        storage.MoveBoxToPallet(box, pallet);
+
+        // Assert
+        Assert.True(pallet.Boxes.Count() == 1, "The pallet in storage does not contain one box!");
+    }
 }

@@ -48,6 +48,9 @@ public class StorageBox : UniversalBox
         if (Id == default) { Id = Guid.NewGuid(); }
     }
 
+    public override int GetHashCode() => Id.GetHashCode();
+    public bool Equals(StorageBox obj) => (obj.Id == Id);
+
     public static StorageBox Create(double width,
         double length,
         double height,
