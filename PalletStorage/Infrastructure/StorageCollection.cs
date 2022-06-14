@@ -34,7 +34,7 @@ public static class StorageCollection
         return storage;
     }
 
-    public static async void SaveCollectionInModelAsync(Storage storage)
+    public static async Task SaveCollectionInModelAsync(Storage storage)
     {
         // Save Storage in file
         FileStorage fileStorage = new();

@@ -9,7 +9,7 @@ Storage storage = await StorageCollection.CollectionForWorkAsync();
 storage.Print();
 
 // Save Storage in file with conversion in contract model
-StorageCollection.SaveCollectionInModelAsync(storage);
+await StorageCollection.SaveCollectionInModelAsync(storage);
 
 // Reports
 storage.PrintTopWithMaxExpirationOrderByVolume(3);

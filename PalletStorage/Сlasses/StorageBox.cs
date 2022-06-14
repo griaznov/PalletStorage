@@ -49,7 +49,8 @@ public class StorageBox : UniversalBox
     }
 
     public override int GetHashCode() => Id.GetHashCode();
-    public bool Equals(StorageBox obj) => (obj.Id == Id);
+
+    public override bool Equals(object? obj) => obj is not null && Equals((StorageBox)obj);
 
     public static StorageBox Create(double width,
         double length,
@@ -65,4 +66,6 @@ public class StorageBox : UniversalBox
     {
         return (expDate != default) || (prodDate != default);
     }
+
+    private bool Equals(StorageBox box) => (box.Id == Id);
 }
